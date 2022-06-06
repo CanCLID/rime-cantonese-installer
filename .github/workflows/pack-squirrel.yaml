@@ -1,0 +1,59 @@
+name: pack-squirrel
+on: [workflow_dispatch]
+jobs:
+  pack:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v3
+      - name: Prepare certificates for signing the app and the installer
+        env:
+          APPLE_SIGNING_CERT_BASE64: ${{ secrets.APPLE_SIGNING_CERT_BASE64 }}
+          APPLE_SIGNING_CERT_KEY: ${{ secrets.APPLE_SIGNING_CERT_KEY }}
+          APPLE_SIGNING_IDENT: ${{ secrets.APPLE_SIGNING_IDENT }}
+          MAC_INSTALLER_CERT_BASE64: ${{ secrets.MAC_INSTALLER_CERT_BASE64 }}
+          MAC_INSTALLER_CERT_KEY: ${{ secrets.MAC_INSTALLER_CERT_KEY }}
+          MAC_INSTALLER_CERT_IDENT: ${{ secrets.MAC_INSTALLER_CERT_IDENT }}
+        run: |
+          # Create variables
+          APPLE_SIGNING_CERT_PATH=$RUNNER_TEMP/apple_signing_cert.p12
+          MAC_INSTALLER_CERT_PATH=$RUNNER_TEMP/mac_installer_cert.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          KEYCHAIN_PASSWORD=pw_$(date +%F)
+
+          echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> $GITHUB_ENV
+          echo "KEYCHAIN_PASSWORD=$KEYCHAIN_PASSWORD" >> $GITHUB_ENV
+
+          # Dump certificates into files
+          echo -n "$APPLE_SIGNING_CERT_BASE64" | base64 --decode --output $APPLE_SIGNING_CERT_PATH
+          echo -n "$MAC_INSTALLER_CERT_BASE64" | base64 --decode --output $MAC_INSTALLER_CERT_PATH
+
+          # Create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # Import certificates to keychain
+          security import $APPLE_SIGNING_CERT_PATH -P "$APPLE_SIGNING_CERT_KEY" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH -T "/usr/bin/codesign" -T "/usr/bin/productsign"
+          security import $MAC_INSTALLER_CERT_PATH -P "$MAC_INSTALLER_CERT_KEY" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH -T "/usr/bin/codesign" -T "/usr/bin/productsign"
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # Enable codesigning from a non user interactive shell
+          security set-key-partition-list -S apple-tool:,apple:, -s -k "$KEYCHAIN_PASSWORD" -D "$APPLE_SIGNING_IDENT" -t private $KEYCHAIN_PATH
+          security set-key-partition-list -S apple-tool:,apple:, -s -k "$KEYCHAIN_PASSWORD" -D "$MAC_INSTALLER_CERT_IDENT" -t private $KEYCHAIN_PATH
+      - run: .ci/pack-squirrel.sh
+        env:
+          APPLE_SIGNING_IDENT: ${{ secrets.APPLE_SIGNING_IDENT }}
+      # FIXME Disabled at the moment as Apple refuses to notarize Squirrel.
+      # - name: Sign the installer
+      #   run: |
+      #     productsign --keychain $KEYCHAIN_PATH --sign "$MAC_INSTALLER_CERT_IDENT" build/SquirrelUnsigned.pkg build/Squirrel.pkg
+      #     xcrun altool --notarize-app --primary-bundle-id "im.rime.inputmethod.Squirrel" --username $APPLE_DEV_USERNAME --password $APPLE_DEV_PASSWORD --file build/Squirrel.pkg
+      #   env:
+      #     MAC_INSTALLER_CERT_IDENT: ${{ secrets.MAC_INSTALLER_CERT_IDENT }}
+      - name: Capture current date
+        run: echo "DATE=$(date +%F)" >> $GITHUB_ENV
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Squirrel_${{ env.DATE }}.pkg
+          path: build/Squirrel.pkg
