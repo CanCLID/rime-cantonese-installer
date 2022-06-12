@@ -13,6 +13,7 @@ tar xzf ../squirrel.tgz
 # Overwrite prebuilt schema
 cp -a ../scheme/* squirrel/build/Release/Squirrel.app/Contents/SharedSupport
 cp -a rime-cantonese/*.yaml squirrel/build/Release/Squirrel.app/Contents/SharedSupport
+cp -a rime-cantonese/opencc/* squirrel/build/Release/Squirrel.app/Contents/SharedSupport/opencc
 
 # Resign Squirrel.app after changing files under SharedSupport
 if [ ! -z "$APPLE_SIGNING_IDENT" ]; then
