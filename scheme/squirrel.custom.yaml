@@ -1,0 +1,10 @@
+patch:
+  "style/font_point": 16
+  "style/label_font_point": 14
+  "style/comment_font_point": 12
+  "style/color_scheme": "ink"
+  "style/spacing": 5
+  "style/corner_radius": 6
+  style/horizontal: false
+  "style/border_width" : 5
+  "style/border_height" : 5
