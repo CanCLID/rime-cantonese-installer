@@ -1,0 +1,1 @@
+Edit the *install-custom.nsi* to build up customized weasel installer.
