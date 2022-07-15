@@ -39,3 +39,8 @@ jobs:
           # Arguments to makensis.exe
           arguments: ""
           additional-plugin-paths: ""
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Weasel_${{ env.DATE }}.exe
+          path: weaselCustomPack/nsiBuild/archives\weasel-installer.exe
