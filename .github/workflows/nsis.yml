@@ -35,7 +35,7 @@ jobs:
         uses: joncloud/makensis-action@v3.7
         with:
           # Path to the .nsi script file
-          script-file: weaselCustomPack/nsiBuild/
+          script-file: weaselCustomPack/nsiBuild/install.nsi
           # Arguments to makensis.exe
           arguments: ""
           additional-plugin-paths: ""
