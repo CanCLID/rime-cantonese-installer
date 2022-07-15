@@ -20,7 +20,7 @@ Unicode true
 Name "小狼毫 ${WEASEL_VERSION}-Cantonese-Edition"
 
 ; The file to write
-OutFile "archives\weasel-${WEASEL_VERSION}.${WEASEL_BUILD}-Cantonese-Edition-installer.exe"
+OutFile "archives\weasel-installer.exe"
 
 VIProductVersion "${WEASEL_VERSION}.${WEASEL_BUILD}"
 VIAddVersionKey /LANG=2052 "ProductName" "小狼毫"
