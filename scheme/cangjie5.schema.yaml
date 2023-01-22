@@ -4,14 +4,13 @@
 schema:
   schema_id: cangjie5
   name: 倉頡五代
-  version: "2020.03.01"
+  version: "0.30"
   author:
     - 發明人 朱邦復先生
   description: |
-    倉頡五代補完計畫
-    專案網址：https://github.com/Jackchows/Cangjie5
-    原碼表為「倉頡之友·馬來西亞」發佈的「倉頡平台2012」軟件所含「五倉世紀」碼表
-    網址：www.chinesecj.com
+    第五代倉頡輸入法
+    碼表源自倉頡之友發佈的《五倉世紀版》
+    www.chinesecj.com
   dependencies:
     - luna_quanpin
 
@@ -67,16 +66,16 @@ translator:
   max_phrase_length: 5
   preedit_format:
     - 'xform/^([a-z]*)$/$1\t（\U$1\E）/'
-    - "xlit|ABCDEFGHIJKLMNOPQRSTUVWXYZ|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜片|"
+    - "xlit|ABCDEFGHIJKLMNOPQRSTUVWXYZ|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
   comment_format:
-    - "xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜片～|"
+    - "xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符～|"
   disable_user_dict_for_patterns:
     - "^z.*$"
     - "^yyy.*$"
 
 abc_segmentor:
   extra_tags:
-#    - reverse_lookup  # 與拼音（反查碼）混打
+    - reverse_lookup  # 與拼音（反查碼）混打
 
 reverse_lookup:
   dictionary: luna_pinyin
@@ -89,7 +88,7 @@ reverse_lookup:
     - xform/([nl])ue/$1üe/
     - xform/([jqxy])v/$1u/
   comment_format:
-    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜片|"
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
 
 simplifier:
   tips: all  # 簡化字模式下提示對應的傳統漢字
@@ -103,5 +102,5 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
-    punct: "^/([0-9]0?|[a-z]+)$"
-    reverse_lookup: "`[a-z]*'?$|[a-z]*'$"
+    punct: '^/([0-9]0?|[A-Za-z]+)$'
+    reverse_lookup: "`[a-z]*'?$|[a-z]+'$"

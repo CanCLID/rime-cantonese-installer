@@ -1,4 +1,4 @@
-﻿; weasel installation script
+; weasel installation script
 !include FileFunc.nsh
 !include LogicLib.nsh
 !include MUI2.nsh
@@ -156,7 +156,7 @@ program_files:
   ; opencc data files
   SetOutPath $INSTDIR\data\opencc
   File "..\..\scheme\opencc\*.json"
-  File "..\..\scheme\opencc\*.ocd2"
+  File "..\..\scheme\opencc\*.ocd"
   ; images
   SetOutPath $INSTDIR\data\preview
   File "data\preview\*.png"
