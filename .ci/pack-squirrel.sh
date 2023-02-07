@@ -5,13 +5,13 @@ mkdir build
 pushd build
 
 # Get the latest rime-cantonese files
-git clone https://github.com/rime/rime-cantonese.git --depth 1 --branch master --single-branch
+git clone https://github.com/rime/rime-cantonese.git --depth 1 --branch main --single-branch
 
 # Get the latest rime-stroke files
 git clone https://github.com/rime/rime-stroke.git --depth 1 --branch master --single-branch
 
 # Get the latest rime-loengfan files
-git clone https://github.com/CanCLID/rime-loengfan.git --depth 1 --branch master --single-branch
+git clone https://github.com/CanCLID/rime-loengfan.git --depth 1 --branch main --single-branch
 
 # Untar prebuilt Squirrel
 tar xzf ../squirrel.tgz
