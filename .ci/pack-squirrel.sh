@@ -10,6 +10,9 @@ git clone https://github.com/rime/rime-cantonese.git --depth 1 --branch master -
 # Get the latest rime-stroke files
 git clone https://github.com/rime/rime-stroke.git --depth 1 --branch master --single-branch
 
+# Get the latest rime-loengfan files
+git clone https://github.com/CanCLID/rime-loengfan.git --depth 1 --branch master --single-branch
+
 # Untar prebuilt Squirrel
 tar xzf ../squirrel.tgz
 
@@ -17,6 +20,8 @@ tar xzf ../squirrel.tgz
 cp -a ../scheme-squirrel/* squirrel/build/Release/Squirrel.app/Contents/SharedSupport
 cp -a rime-stroke/stroke.dict.yaml squirrel/build/Release/Squirrel.app/Contents/SharedSupport
 cp -a rime-stroke/stroke.schema.yaml squirrel/build/Release/Squirrel.app/Contents/SharedSupport
+cp -a rime-loengfan/loengfan.dict.yaml squirrel/build/Release/Squirrel.app/Contents/SharedSupport
+cp -a rime-loengfan/loengfan.schema.yaml squirrel/build/Release/Squirrel.app/Contents/SharedSupport
 cp -a rime-cantonese/*.{txt,yaml} squirrel/build/Release/Squirrel.app/Contents/SharedSupport
 cp -a rime-cantonese/opencc/* squirrel/build/Release/Squirrel.app/Contents/SharedSupport/opencc
 
