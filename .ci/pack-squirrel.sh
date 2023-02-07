@@ -11,7 +11,7 @@ git clone https://github.com/rime/rime-cantonese.git --depth 1 --branch master -
 tar xzf ../squirrel.tgz
 
 # Overwrite prebuilt schema
-cp -a ../scheme/* squirrel/build/Release/Squirrel.app/Contents/SharedSupport
+cp -a ../scheme-squirrel/* squirrel/build/Release/Squirrel.app/Contents/SharedSupport
 cp -a rime-cantonese/*.{txt,yaml} squirrel/build/Release/Squirrel.app/Contents/SharedSupport
 cp -a rime-cantonese/opencc/* squirrel/build/Release/Squirrel.app/Contents/SharedSupport/opencc
 
